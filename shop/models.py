@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Tag(models.Model):
@@ -16,6 +17,9 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('shop:painting_list_by_tag', args=(self.slug,))
 
 
 class Painting(models.Model):
@@ -40,3 +44,6 @@ class Painting(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('shop:painting_detail', args=(self.pk, self.slug,))
