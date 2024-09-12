@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Painting, Tag
+from cart.forms import CartAddPaintingForm
 
 
 def painting_list(request, tag_slug=None):
@@ -15,6 +16,9 @@ def painting_list(request, tag_slug=None):
                   {'tag': tag,
                    'tags': tags, 'paintings': paintings})
 
+
 def painting_detail(request, slug, id):
     painting = get_object_or_404(Painting, id=id, slug=slug)
-    return render(request, 'shop/painting/detail.html', {'painting': painting})
+    cart_painting_form = CartAddPaintingForm()
+    return render(request, 'shop/painting/detail.html',
+                  {'painting': painting, 'cart_painting_form': cart_painting_form})

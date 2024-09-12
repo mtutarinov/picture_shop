@@ -19,9 +19,10 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 
 urlpatterns = [
-                  path('admin/', admin.site.urls),
-                  path('', include('shop.urls', namespace='shop')),
-              ] + debug_toolbar_urls()
+    path('admin/', admin.site.urls),
+    path('cart/', include('cart.urls', namespace='cart')),
+    path('', include('shop.urls', namespace='shop')),
+] + debug_toolbar_urls()
 
 if settings.DEBUG:
     from django.conf.urls.static import static

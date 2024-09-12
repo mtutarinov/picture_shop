@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shop',
     'debug_toolbar',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +143,5 @@ DEBUG_TOOLBAR_CONFIG = {
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+CART_SESSION_ID = 'cart'
