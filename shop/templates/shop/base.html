@@ -16,7 +16,7 @@
         {% if total_items > 0 %}
         Корзина:
         <a href="{% url 'cart:cart_detail' %}">
-            {{ total_items }} картина{{ total_items|pluralize }},
+            {{ total_items }} картин{{ total_items|pluralize:"a,ы" }},
             ${{ cart.get_total_price }}
         </a>
         {% else %}

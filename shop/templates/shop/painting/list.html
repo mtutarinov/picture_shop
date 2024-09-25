@@ -24,7 +24,7 @@
     {% for painting in paintings %}
       <div class="item">
         <a href="{{ painting.get_absolute_url }}">
-          <img src="{% if painting.image %}{{ painting.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+          <img src="{% if painting.image %}{{ painting.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
         </a>
         <a href="{{ painting.get_absolute_url }}">{{ painting.name }}</a>
         <br>

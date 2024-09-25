@@ -26,6 +26,8 @@ a.button, input[type="submit"] {
     padding:10px 20px;
     font-size:14px;
     border:0;
+    margin-right: 4px;
+
 }
 
 a.button.light {
@@ -219,6 +221,7 @@ ul.errorlist {
 
 .product-detail h2 {
     margin-top:10px;
+    display: inline;
 }
 
 .order-form {
@@ -327,4 +330,12 @@ form div.field {
     background:#efefef;
     color:#666;
     border-radius:4px;
+}
+
+div.tags {
+    margin-top:5px;
+}
+.checkout {
+    width: 650px;
+    margin: auto;
 }

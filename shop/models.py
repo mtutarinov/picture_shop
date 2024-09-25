@@ -4,16 +4,16 @@ from django.urls import reverse
 
 class Tag(models.Model):
     name = models.CharField(max_length=200, verbose_name='Назавание')
-    slug = models.SlugField(max_length=200, unique=True, verbose_name='')
+    slug = models.SlugField(max_length=200, unique=True, verbose_name='Slug')
 
     class Meta:
         ordering = ['name']
 
-    indexes = [
-        models.Index(fields=['name']),
-    ]
-    verbose_name = 'Тег'
-    verbose_name_plural = 'Теги'
+        indexes = [
+            models.Index(fields=['name']),
+        ]
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
 
     def __str__(self):
         return self.name
@@ -36,11 +36,11 @@ class Painting(models.Model):
     class Meta:
         ordering = ['name']
 
-    indexes = [
-        models.Index(fields=['id', 'slug']),
-        models.Index(fields=['name']),
-        models.Index(fields=['-created']),
-    ]
+        indexes = [
+            models.Index(fields=['id', 'slug']),
+            models.Index(fields=['name']),
+            models.Index(fields=['-created']),
+        ]
 
     def __str__(self):
         return self.name

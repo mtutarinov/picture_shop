@@ -7,16 +7,19 @@
 <div class="product-detail">
     <img src="{% if painting.image %}{{ painting.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
     <h1>{{ painting.name }}</h1>
-    <h2>
-        <a href="{{ painting.tag.get_absolute_url }}">
-            {{ painting.tag }}
-        </a>
-    </h2>
+        <div class="tags">
+        {% for tag in painting.tag.all %}
+            <h2>
+            <a class="button" href="{{ tag.get_absolute_url }}">
+            {{ tag }}
+            </a>
+            </h2>
+        {% endfor %}
+        </div>
     <p class="price">${{ painting.price }}</p>
     <form action="{% url 'cart:cart_add' painting.id %}" method="post">
-        {{ cart_painting_form }}
         {% csrf_token %}
-        <input type="submit" value="Add to cart">
+        <input type="submit" value="Добавить в корзину">
     </form>
     {{ painting.description|linebreaks }}
 </div>

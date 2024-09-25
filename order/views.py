@@ -12,9 +12,9 @@ def order_create(request):
             order = form.save()
             for item in cart:
                 OrderPainting.objects.create(order=order,
-                                        painting=item['painting'],
-                                        price=item['price'],
-                                        quantity=item['quantity'])
+                                             painting=item['painting'],
+                                             price=item['price'],
+                                             )
 
             cart.clear()
             return render(request,
