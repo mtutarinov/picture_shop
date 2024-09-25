@@ -25,3 +25,11 @@ services:
     volumes:
       - ./.schemas:/var/lib/postgresql/data
 
+  redis:
+    image: redis:latest
+    volumes:
+      - ./.redis_data:/data
+    command: redis-server --dir /data
+    ports:
+      - "6379:6379/tcp"
+    restart: "unless-stopped"

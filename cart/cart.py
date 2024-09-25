@@ -14,11 +14,6 @@ class Cart:
         painting_id = str(painting.id)
         if painting_id not in self.cart:
             self.cart[painting_id] = {'price': str(painting.price)}
-        # if override_quantity:
-        #     self.cart[painting_id]['quantity'] = quantity
-        # else:
-        #     self.cart[painting_id]['quantity'] += quantity
-
         self.save()
 
     def save(self):
@@ -38,12 +33,9 @@ class Cart:
             cart[str(painting.id)]['painting'] = painting
         for item in cart.values():
             item['price'] = int(item['price'])
-            # item['total_price'] = item['price'] * item['quantity']
-            # item['total_price'] += item['price']
             yield item
 
     def __len__(self):
-        # return sum(item['quantity'] for item in self.cart.values())
         return len(self.cart.values())
 
     def get_total_price(self):

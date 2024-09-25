@@ -5,40 +5,53 @@ Your shopping cart
 {% endblock %}
 {% block content %}
 <div class="checkout">
-<h1>Your shopping cart</h1>
-<table class="cart">
-    <tbody>
-    {% for item in cart %}
-    {% with painting=item.painting %}
-    <tr>
-        <td>
-            <a href="{{ painting.get_absolute_url }}">
-                <img src="{% if painting.image %}{{ painting.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+    <h1>Your shopping cart</h1>
+    <table class="cart">
+        <tbody>
+        {% for item in cart %}
+        {% with painting=item.painting %}
+        <tr>
+            <td>
+                <a href="{{ painting.get_absolute_url }}">
+                    <img src="{% if painting.image %}{{ painting.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+                </a>
+            </td>
+            <td>{{ painting.name }}</td>
+            <td class="num">{{ item.price }} руб.</td>
+            <td>
+                <form action="{% url 'cart:cart_remove' painting.id %}" method="post">
+                    <input type="submit" value="Remove">
+                    {% csrf_token %}
+                </form>
+            </td>
+        </tr>
+        {% endwith %}
+        {% endfor %}
+        <tr class="total">
+            <td>Total</td>
+            <td colspan="2"></td>
+            <td class="num">{{ cart.get_total_price }} руб.</td>
+        </tr>
+        </tbody>
+    </table>
+    {% if most_view %}
+    <div class="recommendations cart">
+        <h3>Популярное</h3>
+        {% for p in most_view %}
+        <div class="item">
+            <a href="{{ p.get_absolute_url }}">
+                <img src="{% if p.image %}{{ p.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
             </a>
-        </td>
-        <td>{{ painting.name }}</td>
-        <td class="num">{{ item.price }} руб.</td>
-        <td>
-            <form action="{% url 'cart:cart_remove' painting.id %}" method="post">
-            <input type="submit" value="Remove">
-            {% csrf_token %}
-            </form>
-        </td>
-    </tr>
-    {% endwith %}
-    {% endfor %}
-    <tr class="total">
-        <td>Total</td>
-        <td colspan="2"></td>
-        <td class="num">{{ cart.get_total_price }} руб.</td>
-    </tr>
-    </tbody>
-</table>
-<p class="text-right">
-    <a href="{% url 'shop:painting_list' %}" class="button light">Continue shopping</a>
-    <a href="{% url 'order:order_create' %}" class="button">
-        Checkout
-    </a>
-</p>
+            <p><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <p class="text-right">
+        <a href="{% url 'shop:painting_list' %}" class="button light">Continue shopping</a>
+        <a href="{% url 'order:order_create' %}" class="button">
+            Checkout
+        </a>
+    </p>
 </div>
 {% endblock %}

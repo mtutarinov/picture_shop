@@ -7,20 +7,33 @@
 <div class="product-detail">
     <img src="{% if painting.image %}{{ painting.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
     <h1>{{ painting.name }}</h1>
-        <div class="tags">
+    <div class="tags">
         {% for tag in painting.tag.all %}
-            <h2>
+        <h2>
             <a class="button" href="{{ tag.get_absolute_url }}">
-            {{ tag }}
+                {{ tag }}
             </a>
-            </h2>
+        </h2>
         {% endfor %}
-        </div>
+    </div>
     <p class="price">${{ painting.price }}</p>
     <form action="{% url 'cart:cart_add' painting.id %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Добавить в корзину">
     </form>
     {{ painting.description|linebreaks }}
+    {% if most_view %}
+    <div class="recommendations">
+        <h3>Популярное</h3>
+        {% for m in most_view %}
+        <div class="item">
+            <a href="{{ m.get_absolute_url }}">
+                <img src="{% if m.image %}{{ m.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+            </a>
+            <p><a href="{{ m.get_absolute_url }}">{{ m.name }}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
