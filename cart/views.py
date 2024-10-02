@@ -1,15 +1,12 @@
 import redis
+
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
+
 from shop.models import Painting
 from .cart import Cart
-
-# from .forms import CartAddPaintingForm
-
-r = redis.Redis(host=settings.REDIS_HOST,
-                port=settings.REDIS_PORT,
-                db=settings.REDIS_DB)
+from shop.recommender_system import most_view
 
 
 @require_POST
@@ -31,10 +28,6 @@ def cart_remove(request, painting_id):
 def cart_detail(request):
     cart = Cart(request)
     cart_paintings = [item['painting'] for item in cart]
-    cart_paintings_ids = [painting.id for painting in cart_paintings]
-    painting_views = r.zrange('painting_views', 0, -1,
-                              desc=True)[:10]
-    painting_views_ids = [int(id) for id in painting_views]
-    most_view = list(Painting.objects.filter(id__in=painting_views_ids).exclude(id__in=cart_paintings_ids))
-    most_view.sort(key=lambda x: painting_views_ids.index(x.id))
-    return render(request, 'cart/detail.html', {'cart': cart, 'most_view': most_view})
+    exclude_list = [painting.id for painting in cart_paintings]
+    return render(request, 'cart/detail.html', {'cart': cart, 'most_view': most_view(exclude_list)})
+
